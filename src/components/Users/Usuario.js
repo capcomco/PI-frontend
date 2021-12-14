@@ -32,7 +32,7 @@ const Usuario = ({ user }) => {
 
     return <tr>
         <td>{user.name}</td>
-        <td>{user._id}</td>
+        
         <td>{user.estado}</td>
         <td>{user.email}</td>
         <td>{user.perfil}</td>

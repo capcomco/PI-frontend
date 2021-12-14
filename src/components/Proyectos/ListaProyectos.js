@@ -1,6 +1,9 @@
+import Table from 'react-bootstrap/Table';
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import Proyecto from "./Proyecto";
+import { Container } from 'react-bulma-components';
+import MenuPrincipal from '../Menu';
 
 
 
@@ -33,20 +36,31 @@ const ListaProyectos = () => {
     }
 
     return <div>
-        <h1 >Lista de Proyectos</h1>
-        <table className="table">
+        <MenuPrincipal/>
+        <Container fluid>
+        <h1>Lista de Proyectos</h1>
+        <Table striped bordered hover size="sm">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Identificacion</th>
-                    <th>Descripcion</th>
-                    <th>Presupuesto</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-                {data.getProjects.map((getProjectById) => <Proyecto project={getProjectById} />)}
+                    <th >Nombre</th>
+                    <th >Identificacion</th>
+                    <th >Descripcion</th>
+                    <th >Presupuesto</th>
+                    <th >Estado</th>
+                    <th >Acciones</th>
+                </tr >
+                
             </thead>
-        </table>
+            <tbody>
+                
+                {data.getProjects.map((getProjectById) => <Proyecto project={getProjectById} />)}
+                
+            </tbody>
+            <tr>
+                
+            </tr>
+        </Table>
+        </Container >
     </div>
 }
 

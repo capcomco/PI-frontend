@@ -1,3 +1,4 @@
+
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
 
@@ -8,7 +9,7 @@ const Proyecto = ({ project }) => {
             activeUser(identificacion:224465)
         }
     /*/
-    const ACTIVAR_USUARIO = gql`
+    /* const ACTIVAR_USUARIO = gql`
         mutation activeUser($identificacion:Int){
             activeUser(identificacion:$identificacion)
         }
@@ -19,7 +20,7 @@ const Proyecto = ({ project }) => {
         }
     `
     const [activar] = useMutation(ACTIVAR_USUARIO)
-    const [eliminar] = useMutation(ELIMINAR_USUARIO)
+    const [eliminar] = useMutation(ELIMINAR_USUARIO) */
 
 
     /* const activarUser = () => {

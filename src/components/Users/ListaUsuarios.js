@@ -1,6 +1,9 @@
+import Table from 'react-bootstrap/Table'
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import Usuario from "./Usuario";
+import { Container } from 'react-bulma-components';
+import MenuPrincipal from '../Menu';
 
 
 
@@ -33,20 +36,26 @@ const ListaUsuarios = () => {
     }
 
     return <div>
+        <MenuPrincipal/>
+        <Container>
         <h1 >Lista de Usuarios</h1>
-        <table className="table">
+        <Table striped bordered hover size="sm">
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Identificacion</th>
+                    
                     <th>Estado</th>
                     <th>Email</th>
                     <th>Perfil</th>
                     <th>Acciones</th>
                 </tr>
-                {data.getUsers.map((getUserById) => <Usuario user={getUserById} />)}
+               
             </thead>
-        </table>
+            <tbody>
+                {data.getUsers.map((getUserById) => <Usuario user={getUserById} />)}
+            </tbody>
+        </Table>
+        </Container>
     </div>
 }
 
