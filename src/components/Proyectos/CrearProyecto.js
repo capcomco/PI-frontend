@@ -1,3 +1,4 @@
+import MenuPrincipal from "../Menu";
 import {
     gql, useMutation
 } from "@apollo/client";
@@ -25,7 +26,8 @@ const CreateProject = () => {
         
     }
 
-    return (<div><h1>Crear Proyecto</h1>
+    return (<div><MenuPrincipal/>
+        <h1>Crear Proyecto</h1>
         <form onSubmit={e => {
             e.preventDefault();
             creadorDeProyecto({variables:{
