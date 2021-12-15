@@ -37,8 +37,7 @@ const Proyecto = ({ project }) => {
         <td>{project.descripcion}</td>
         <td>{project.presupuesto}</td>
         <td>{project.estado}</td>
-        {/* <td><button className="btn btn-primary" onClick={activarUser}>Activar</button>
-            <button className="btn btn-primary" onClick={eliminarUser}>Eliminar</button></td> */}
+        <td><button className="btn btn-primary btn-sm" >Activar</button></td>
     </tr>
 }
 

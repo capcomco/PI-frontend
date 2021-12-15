@@ -13,7 +13,7 @@ mutation CreateProject($nombre: String, $descripcion: String, $objetivosGenerale
     }
 `;
 
-const CreateProject = () => {
+const EditarPerfil = () => {
     const [creadorDeProyecto] = useMutation(MUTATION_PROYECTO)
     let project = {
         nombre: "",
@@ -47,33 +47,33 @@ const CreateProject = () => {
                 lider: project.lider.value
             }})
         }} >
-            
             <Container>
-            <h1>Crear Proyecto</h1>
+            <h1>Mi Perfil</h1>
             <Form.Group>
-                <Form.Label>Nombre Proyecto</Form.Label>
-                <Form.Control input ref={nombre => project.nombreProyecto = nombre} placeholder="Nombre" />
+                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Control input ref={nombre => project.nombreProyecto = nombre} placeholder="Email" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Objetivos</Form.Label>
-                <Form.Control input ref={objetivos => project.objetivos = objetivos} placeholder="Objetivos" />
+                <Form.Label>Identificación</Form.Label>
+                <Form.Control input ref={objetivos => project.objetivos = objetivos} placeholder="Identificación" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Objetivos Especificos</Form.Label>
-                <Form.Control input ref={objetivosEspecificos => project.objetivosEspecificos = objetivosEspecificos} placeholder="Objetivos Especificos" />
+                <Form.Label>Nombre Completo</Form.Label>
+                <Form.Control input ref={objetivosEspecificos => project.objetivosEspecificos = objetivosEspecificos} placeholder="Nombre Completo" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Lider</Form.Label>
-                <Form.Control input ref={lider => project.lider = lider} placeholder="Lider" />
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control input type="password" ref={lider => project.lider = lider} placeholder="Contraseña" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Presupuesto</Form.Label>
-                <Form.Control input ref={presupuesto => project.presupuesto = presupuesto} placeholder="Presupuesto" />
+                <Form.Label>Perfil</Form.Label>
+                <Form.Control input ref={presupuesto => project.presupuesto = presupuesto} placeholder="Estudiante-Lider o Administrador" />
             </Form.Group>
-            <div><button className="btn btn-primary" type="submit">Registrar Proyecto</button></div>
-            </Container>
+            <div><button className="btn btn-secondary" type="submit">Actualizar</button></div>
+        </Container>
         </form>
+        
     </div>)
 }
 
-export default CreateProject
+export default EditarPerfil

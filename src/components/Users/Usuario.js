@@ -36,8 +36,8 @@ const Usuario = ({ user }) => {
         <td>{user.estado}</td>
         <td>{user.email}</td>
         <td>{user.perfil}</td>
-        <td><button className="btn btn-primary" onClick={activarUser}>Activar</button>
-            <button className="btn btn-primary" onClick={eliminarUser}>Eliminar</button></td>
+        <td><button className="btn btn-primary btn-sm" onClick={activarUser}>Autorizar</button>
+            <button className="btn btn-danger btn-sm" onClick={eliminarUser}>Rechazar</button></td>
     </tr>
 }
 

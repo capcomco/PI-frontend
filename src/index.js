@@ -23,6 +23,10 @@ import NoExiste from './components/NoExiste';
 import ListaUsuarios from './components/Users/ListaUsuarios';
 import ListaProyectos from './components/Proyectos/ListaProyectos';
 import CrearProyecto from './components/Proyectos/CrearProyecto';
+import Login from './components/Login';
+import Home from './components/Home';
+import CreateUsuario from './components/Users/RegistroUsuario';
+import EditarPerfil from './components/Users/EditarPerfil';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 
@@ -45,10 +49,14 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={MenuPrincipal} />
+      <Route exact path="/" component={Login} />
+        <Route exact path="/menu" component={MenuPrincipal} />
+        <Route exact path="/home" component={Home} />
         <Route exact path="/proyectos" component={ListaProyectos} />
         <Route exact path="/usuarios" component={ListaUsuarios} />
         <Route exact path="/nuevoproyecto" component={CrearProyecto} />
+        <Route exact path="/registrousuario" component={CreateUsuario} />
+        <Route exact path="/editarperfil" component={EditarPerfil} />
         
         <Route path="/" component={NoExiste} />
       </Switch>
