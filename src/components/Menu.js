@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom"
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 /* import AddButton from './AddButton'
@@ -17,6 +16,8 @@ const MenuPrincipal = () => {
       <Nav.Link href="/home">Home</Nav.Link>
       <Nav.Link href="/nuevoproyecto">Crear Proyecto</Nav.Link>
       <Nav.Link href="/proyectos">Proyectos</Nav.Link>
+      <Nav.Link href="/avances">Avances</Nav.Link>
+      <Nav.Link href="/crearavance">Crear Avance</Nav.Link>
       <Nav.Link href="/usuarios">Usuarios</Nav.Link>
       <Nav.Link href="/editarperfil">Editar Mi Perfil</Nav.Link>
       <Nav.Link href="/">Salir</Nav.Link>

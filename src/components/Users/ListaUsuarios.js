@@ -11,10 +11,9 @@ const ListaUsuarios = () => {
     const USUARIOS = gql` 
 
     query {
-        getUsers {
-        _id
-        name
-        lastName
+        usuarios {
+        identificacion
+        nombre
         email
         perfil
         estado
@@ -42,17 +41,17 @@ const ListaUsuarios = () => {
         <Table striped bordered hover size="sm">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    
-                    <th>Estado</th>
+                    <th>Nombre</th>                    
+                    <th>Doc.Identidad</th>
                     <th>Email</th>
-                    <th>Perfil</th>
-                    <th>Acciones</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Autorización</th>
                 </tr>
                
             </thead>
             <tbody>
-                {data.getUsers.map((getUserById) => <Usuario user={getUserById} />)}
+                {data.usuarios.map((usuario) => <Usuario user={usuario} />)}
             </tbody>
         </Table>
         </Container>

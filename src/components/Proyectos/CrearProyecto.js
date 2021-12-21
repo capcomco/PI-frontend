@@ -6,74 +6,106 @@ import {
     gql, useMutation
 } from "@apollo/client";
 import React from "react";
+import { useHistory } from "react-router";
 
-const MUTATION_PROYECTO = gql`
-mutation CreateProject($nombre: String, $descripcion: String, $objetivosGenerales: String, $objetivosEspecificos: [String], $presupuesto: Int, $fechaInicio: String, $fechaTerminacion: String, $estado: EstadoStatus, $fase: FaseStatus, $lider: ID) {
-    createProject( nombre: $nombre, descripcion: $descripcion, objetivosGenerales: $objetivosGenerales, objetivosEspecificos: $objetivosEspecificos, presupuesto: $presupuesto, fechaInicio: $fechaInicio, fechaTerminacion: $fechaTerminacion, estado: $estado, fase: $fase, lider: $lider)
+const CreateProyecto = () => {
+    const his = useHistory();
+
+    let identificador, nombreProyecto, descripcion, objetivosGenerales, objetivosEspecificos, presupuesto, lider, fechaInicio, fechaTerminacion, fase, estado
+
+    const registroProyecto = async (e) => {
+        e.preventDefault()
+        let nuevoProyecto = {
+            "identificador": identificador.value,
+            "nombreProyecto": nombreProyecto.value,
+            "descripcion": descripcion.value,
+            "objetivosGenerales": objetivosGenerales.value,
+            "objetivosEspecificos": objetivosEspecificos.value,
+            "presupuesto": parseInt(presupuesto.value),
+            "fechaInicio": fechaInicio.value,
+            "fechaTerminacion": fechaTerminacion.value,
+            "estado": estado.value,
+            "fase": fase.value,
+            "lider": lider.value
+        }
+        const response = await crearProject({ variables: { project: nuevoProyecto } })
+        if (response?.data?.createProject) {
+            alert("Proyecto Creado")
+            his.push("/home")
+        } else {
+            alert("Se presento un error")
+        }
     }
-`;
 
-const CreateProject = () => {
-    const [creadorDeProyecto] = useMutation(MUTATION_PROYECTO)
-    let project = {
-        nombre: "",
-        descripcion:"",
-        objetivosGenerales: "",
-        objetivosEspecificos:"",
-        presupuesto: 0,
-        fechaInicio: "",
-        fechaTerminacion: "",
-        estado:"",
-        fase:"",
-        lider: "",
-        
-    }
+    const CREAR_PROYECTO = gql`
+    mutation CreateProject($project: ProjectInput) {
+        createProject(project: $project)
+      }
+    
+    `
 
-    return (<div><MenuPrincipal/>
-        
-        <form onSubmit={e => {
-            e.preventDefault();
-            creadorDeProyecto({variables:{
-                //identificador: project.identificador.value,
-                nombre: project.nombre.value,
-                descripcion:project.descripcion.value,
-                objetivosGenerales: project.objetivosGenerales.value,
-                objetivosEspecificos: project.objetivosEspecificos.value,
-                fechaInicio:project.fechaInicio.value,
-                fechaTerminacion:project.fechaTerminacion.value,
-                estado:project.estado.value,
-                fase:project.fase.value,
-                presupuesto: parseInt(project.presupuesto.value),
-                lider: project.lider.value
-            }})
-        }} >
-            
+    const [crearProject] = useMutation(CREAR_PROYECTO)
+
+
+    return (<div><MenuPrincipal />
+
+        <form >
+
             <Container>
-            <h1>Crear Proyecto</h1>
-            <Form.Group>
-                <Form.Label>Nombre Proyecto</Form.Label>
-                <Form.Control input ref={nombre => project.nombreProyecto = nombre} placeholder="Nombre" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Objetivos</Form.Label>
-                <Form.Control input ref={objetivos => project.objetivos = objetivos} placeholder="Objetivos" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Objetivos Especificos</Form.Label>
-                <Form.Control input ref={objetivosEspecificos => project.objetivosEspecificos = objetivosEspecificos} placeholder="Objetivos Especificos" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Lider</Form.Label>
-                <Form.Control input ref={lider => project.lider = lider} placeholder="Lider" />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Presupuesto</Form.Label>
-                <Form.Control input ref={presupuesto => project.presupuesto = presupuesto} placeholder="Presupuesto" />
-            </Form.Group>
-            <div><button className="btn btn-primary" type="submit">Registrar Proyecto</button></div>
+                <h1>Crear Proyecto</h1>
+                <Form.Group>
+                    <Form.Label>Nombre Proyecto</Form.Label>
+                    <Form.Control input ref={val => nombreProyecto = val} placeholder="Nombre Proyecto" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Identificador</Form.Label>
+                    <Form.Control input ref={val => identificador = val} placeholder="Identificador" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Descripcion</Form.Label>
+                    <Form.Control input ref={val => descripcion = val} placeholder="Descripción" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Objetivos Generales</Form.Label>
+                    <Form.Control input ref={val => objetivosGenerales = val} placeholder="Objetivos Generales" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Objetivos Específicos</Form.Label>
+                    <Form.Control input ref={val => objetivosEspecificos = val} placeholder="Objetivos Especificos" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Lider</Form.Label>
+                    <Form.Control input ref={val => lider = val} placeholder="Lider" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Fecha Inicio</Form.Label>
+                    <Form.Control input ref={val => fechaInicio = val} placeholder="fecha de inicio" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Fecha Terminación</Form.Label>
+                    <Form.Control input ref={val => fechaTerminacion = val} placeholder="fecha de terminación" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Presupuesto</Form.Label>
+                    <Form.Control input ref={val => presupuesto = val} placeholder="Presupuesto" />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Fase</Form.Label>
+                    <Form.Select class="form-control" id="sel1" ref={val => fase = val} >
+                        <option value="Iniciado">Iniciado</option>
+                        <option value="Desarrollo">Desarrollo</option>
+                        <option value="Terminado">Terminado</option>                        
+                    </Form.Select>
+                    {/* <Form.Control selec ref={val => fase = val} placeholder="Fase" /> */}
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Estado</Form.Label>
+                    <Form.Control input ref={val => estado = val} placeholder="Estado" />
+                </Form.Group>
+                <div><button className="btn btn-primary" onClick={registroProyecto}>Registrar Proyecto</button></div>
             </Container>
         </form>
     </div>)
 }
 
-export default CreateProject
+export default CreateProyecto

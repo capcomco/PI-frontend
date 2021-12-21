@@ -12,7 +12,8 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  
+  ApolloLink,
+  HttpLink,
 } from "@apollo/client";
   //ApolloLink,
   //HttpLink,
@@ -21,11 +22,14 @@ import {
 import MenuPrincipal from './components/Menu';
 import NoExiste from './components/NoExiste';
 import ListaUsuarios from './components/Users/ListaUsuarios';
+import RegistroUsuario from './components/Users/RegistroUsuario';
 import ListaProyectos from './components/Proyectos/ListaProyectos';
 import CrearProyecto from './components/Proyectos/CrearProyecto';
+import ListaAvances from './components/Avances/ListaAvances';
+import CrearAvance from './components/Avances/CrearAvance';
 import Login from './components/Login';
+/* import Login from './components/Autenticar'; */
 import Home from './components/Home';
-import CreateUsuario from './components/Users/RegistroUsuario';
 import EditarPerfil from './components/Users/EditarPerfil';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -37,9 +41,22 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 //BrowserRouter Colocar Rutas
 //Switch
+const httpLink = new HttpLink({ uri: 'http://localhost:5555/graphql' });
+
+const authLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem('auth_token');
+  operation.setContext({
+    headers: {
+      authorization: token ? `${token}` : ''
+    }
+  });
+  return forward(operation);
+});
+
+
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5555/graphql',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 
@@ -55,7 +72,9 @@ ReactDOM.render(
         <Route exact path="/proyectos" component={ListaProyectos} />
         <Route exact path="/usuarios" component={ListaUsuarios} />
         <Route exact path="/nuevoproyecto" component={CrearProyecto} />
-        <Route exact path="/registrousuario" component={CreateUsuario} />
+        <Route exact path="/avances" component={ListaAvances} />
+        <Route exact path="/crearavance" component={CrearAvance} />
+        <Route exact path="/registrousuario" component={RegistroUsuario} />
         <Route exact path="/editarperfil" component={EditarPerfil} />
         
         <Route path="/" component={NoExiste} />

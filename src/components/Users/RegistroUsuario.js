@@ -6,74 +6,75 @@ import {
     gql, useMutation
 } from "@apollo/client";
 import React from "react";
+import { useHistory } from "react-router";
 
-const MUTATION_PROYECTO = gql`
-mutation CreateProject($nombre: String, $descripcion: String, $objetivosGenerales: String, $objetivosEspecificos: [String], $presupuesto: Int, $fechaInicio: String, $fechaTerminacion: String, $estado: EstadoStatus, $fase: FaseStatus, $lider: ID) {
-    createProject( nombre: $nombre, descripcion: $descripcion, objetivosGenerales: $objetivosGenerales, objetivosEspecificos: $objetivosEspecificos, presupuesto: $presupuesto, fechaInicio: $fechaInicio, fechaTerminacion: $fechaTerminacion, estado: $estado, fase: $fase, lider: $lider)
-    }
-`;
+const RegistroUsuario = () => {
+    const his = useHistory();
 
-const CreateUsuario = () => {
-    const [creadorDeProyecto] = useMutation(MUTATION_PROYECTO)
-    let project = {
-        nombre: "",
-        descripcion:"",
-        objetivosGenerales: "",
-        objetivosEspecificos:"",
-        presupuesto: 0,
-        fechaInicio: "",
-        fechaTerminacion: "",
-        estado:"",
-        fase:"",
-        lider: "",
-        
+    let nombre, email, identificacion, clave, perfil, telefono
+
+    const registrarUsuarioNuevo = async (e) => {
+        e.preventDefault()
+        let nuevoUsuario = {
+            "nombre": nombre.value,
+            "email": email.value,
+            "identificacion": parseInt(identificacion.value),
+            "telefono": telefono.value,
+            "perfil": perfil.value,
+            "clave": clave.value
+        }
+        const response = await crearUser({ variables: { user: nuevoUsuario } })
+        if (response?.data?.createUser) {
+            alert("Registro Exitoso, ahora puede loguearse")
+            his.push("/")
+        } else {
+            alert("Se presento un error")
+        }
     }
+
+    const CREAR_USUARIO = gql`
+    mutation CreateUser($user: UserInput) {
+        createUser(user: $user)
+    }
+
+    `
+
+const [crearUser] = useMutation(CREAR_USUARIO)
 
     return (<div><MenuPrincipal/>
         
-        <form onSubmit={e => {
-            e.preventDefault();
-            creadorDeProyecto({variables:{
-                //identificador: project.identificador.value,
-                nombre: project.nombre.value,
-                descripcion:project.descripcion.value,
-                objetivosGenerales: project.objetivosGenerales.value,
-                objetivosEspecificos: project.objetivosEspecificos.value,
-                fechaInicio:project.fechaInicio.value,
-                fechaTerminacion:project.fechaTerminacion.value,
-                estado:project.estado.value,
-                fase:project.fase.value,
-                presupuesto: parseInt(project.presupuesto.value),
-                lider: project.lider.value
-            }})
-        }} >
+        <form>
             <Container>
             <h1>Registro de Usuario</h1>
             <Form.Group>
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control input ref={val => nombre = val} placeholder="Nombre" />
+            </Form.Group>
+            <Form.Group>
                 <Form.Label>Correo Electrónico</Form.Label>
-                <Form.Control input ref={nombre => project.nombreProyecto = nombre} placeholder="Email" />
+                <Form.Control input ref={val => email = val} placeholder="Correo Electrónico" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Identificación</Form.Label>
-                <Form.Control input ref={objetivos => project.objetivos = objetivos} placeholder="Identificación" />
+                <Form.Label>Documento de Identidad</Form.Label>
+                <Form.Control input ref={val => identificacion = val} placeholder="No de Documento" />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Nombre Completo</Form.Label>
-                <Form.Control input ref={objetivosEspecificos => project.objetivosEspecificos = objetivosEspecificos} placeholder="Nombre Completo" />
+                <Form.Label>Número Telefónico</Form.Label>
+                <Form.Control input ref={val => telefono = val} placeholder="No de Teléfono" />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Contraseña</Form.Label>
-                <Form.Control input type="password" ref={lider => project.lider = lider} placeholder="Contraseña" />
+                <Form.Control input type="password" ref={val => clave = val} placeholder="Contraseña" />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Perfil</Form.Label>
-                <Form.Control input ref={presupuesto => project.presupuesto = presupuesto} placeholder="Estudiante-Lider o Administrador" />
+                <Form.Control input ref={val => perfil = val} placeholder="Escoja el Rol al que se inscribe " />
             </Form.Group>
-            <div><button className="btn btn-primary" type="submit">Registrar Usuario</button></div>
+            <div><button className="btn btn-primary" onClick={registrarUsuarioNuevo}>Registrar Usuario</button></div>
         </Container>
         </form>
         
     </div>)
 }
 
-export default CreateUsuario
+export default RegistroUsuario

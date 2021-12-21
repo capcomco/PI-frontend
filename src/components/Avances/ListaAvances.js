@@ -1,27 +1,24 @@
 import Table from 'react-bootstrap/Table';
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import Proyecto from "./Proyecto";
+import Avance from "./Avance";
 import { Container } from 'react-bulma-components';
 import MenuPrincipal from '../Menu';
 
 
 
-const ListaProyectos = () => {
-    const PROYECTOS = gql` 
+const ListaAvances = () => {
+    const AVANCES = gql` 
 
     query {
-        proyectos {
-        identificador
-        nombreProyecto
-        descripcion
-        presupuesto
-        estado
-        
+        avances {
+        descripcionAvance
+        fechaAvance
+        observaciones               
       }
     }
 `;
-    const { data, loading, error } = useQuery(PROYECTOS);
+    const { data, loading, error } = useQuery(AVANCES);
 
     if (loading) {
         return <div>
@@ -38,23 +35,20 @@ const ListaProyectos = () => {
     return <div>
         <MenuPrincipal/>
         <Container fluid>
-        <h1>Lista de Proyectos</h1>
+        <h1>Lista de Avances</h1>
+        <h2>Proyecto Uno</h2>
         <Table striped bordered hover size="sm">
             <thead>
                 <tr>
-                    <th >Nombre</th>
-                    <th >Identificacion</th>
-                    <th >Descripcion</th>
-                    <th >Presupuesto</th>
-                    <th >Estado</th>
-                    <th >Acciones</th>
-                    <th >Ver Avances</th>
+                    <th >Descripción</th>
+                    <th >Fecha</th>
+                    <th >Observaciones</th>                    
                 </tr >
                 
             </thead>
             <tbody>
                 
-                {data.proyectos.map((getProject) => <Proyecto project={getProject} />)}
+                {data.avances.map((avance) => <Avance avance={avance} />)}
                 
             </tbody>
             <tr>
@@ -65,4 +59,4 @@ const ListaProyectos = () => {
     </div>
 }
 
-export default ListaProyectos
+export default ListaAvances

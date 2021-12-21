@@ -1,8 +1,19 @@
 
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
+import Nav from 'react-bootstrap/Nav'
+import React from 'react'
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import CreateAvance from "../Avances/CrearAvance"
+import { useState } from "react"
+
+
+
+
 
 const Proyecto = ({ project }) => {
+    
+    
 
     /*
         mutation{
@@ -30,15 +41,39 @@ const Proyecto = ({ project }) => {
     const eliminarUser = () => {
         eliminar({ variables: { ident: user.identificacion } })
     } */
+    
 
-    return <tr>
-        <td>{project.nombre}</td>
-        <td>{project._id}</td>
+    return (
+    <>
+    
+    <tr>
+        <td>{project.nombreProyecto}</td>
+        <td>{project.identificador}</td>
         <td>{project.descripcion}</td>
         <td>{project.presupuesto}</td>
         <td>{project.estado}</td>
-        <td><button className="btn btn-primary btn-sm" >Activar</button></td>
+        <td><button  className="btn btn-primary btn-sm" >Act/Desact</button></td>
+        <td>
+            
+            <button className="btn btn-success btn-sm"  >Avances</button>
+            
+        </td>        
     </tr>
+
+      {/* <Modal isOpen={this.state.abierto}>
+          <ModalHeader>Agregar Avance</ModalHeader>
+          <ModalBody>
+            <CreateAvance/>
+          </ModalBody>
+          <ModalFooter>
+
+          </ModalFooter>
+      </Modal> */}
+
+
+ 
+    </>
+    )
 }
 
 export default Proyecto

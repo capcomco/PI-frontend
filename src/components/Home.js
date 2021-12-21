@@ -1,10 +1,8 @@
 import React from "react";
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
 import MenuPrincipal from "./Menu";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import { Container} from "react-bootstrap";
 /* import AddButton from './AddButton'
 import ListProyectos from "./ListProyectos"; */
 
